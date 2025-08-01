@@ -23,7 +23,8 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                     <span
                         x-text="gameStatus"
                         class="text-terminal-green transition-colors duration-300"
-                        :style="errorState ? 'color: #ff4444 !important; text-shadow: 0 0 15px rgba(255, 68, 68, 1), 0 0 30px rgba(255, 68, 68, 0.6);' : ''">READY</span
+                        :style="errorState ? 'color: #ff4444 !important; text-shadow: 0 0 15px rgba(255, 68, 68, 1), 0 0 30px rgba(255, 68, 68, 0.6);' : ''"
+                        >READY</span
                     >
                 </div>
                 <div class="flex items-center space-x-4">
@@ -32,8 +33,14 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                     >
                     <span
                         x-text="currentIndex + '/' + (currentStratagem?.sequence?.length || 0)"
-                        class="text-terminal-green">0/0</span>
-                    <span x-show="errorState" class="text-terminal-red ml-2">[ERROR]</span
+                        class="text-terminal-green">0/0</span
+                    >
+                    <span x-show="errorState" class="text-terminal-red ml-2"
+                        >[ERROR]</span
+                    >
+                    <span
+                        x-show="iconEmphasized"
+                        class="text-terminal-amber ml-2">[EMPHASIS]</span
                     >
                 </div>
             </div>
@@ -51,7 +58,8 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                         <img
                             :src="currentStratagem?.iconUrl || ''"
                             :alt="currentStratagem?.name || 'Loading...'"
-                            class="w-20 h-20 object-contain bg-terminal-dark/50 border border-terminal-border rounded p-3 stratagem-icon"
+                            class="w-20 h-20 object-contain bg-terminal-dark/50 border border-terminal-border rounded p-3 stratagem-icon icon-emphasize"
+                            :class="iconEmphasized ? 'icon-emphasize' : ''"
                             x-show="currentStratagem?.iconUrl"
                         />
                         <div
@@ -137,8 +145,31 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                 </div>
             </div>
 
+            <!-- Loading Bar (shown during transitions) -->
+            <div x-show="isLoading" class="mb-8">
+                <div class="text-center mb-4">
+                    <span class="text-terminal-amber font-semibold"
+                        >LOADING...</span
+                    >
+                    <span
+                        class="text-terminal-green ml-2"
+                        x-text="`${Math.floor(loadingProgress)}%`"></span>
+                </div>
+                <div class="max-w-md mx-auto">
+                    <div
+                        class="h-4 bg-terminal-dark border border-terminal-border rounded overflow-hidden"
+                    >
+                        <div
+                            class="h-full rounded transition-all duration-75 ease-out loading-bar-fill"
+                            :style="`width: ${loadingProgress}%; background-color: #00ff88;`"
+                        >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Virtual Arrow Keys (for visual reference) -->
-            <div class="mb-8">
+            <div class="mb-8" x-show="!isLoading">
                 <div class="text-center mb-4">
                     <span class="text-terminal-amber font-semibold"
                         >CONTROLS:</span
@@ -230,6 +261,9 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
             gameMessage: "Press any arrow key to begin training...",
             pressedKey: null,
             errorState: false,
+            isLoading: false,
+            loadingProgress: 0,
+            iconEmphasized: false,
 
             init() {
                 this.initGame();
@@ -307,34 +341,65 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                         this.gameMessage =
                             '<span class="text-terminal-green">✅ SEQUENCE COMPLETED! Excellent work, Helldiver!</span>';
                         this.gameStatus = "COMPLETED";
+
+                        // Start loading sequence after brief delay
                         setTimeout(() => {
-                            this.initGame(); // Start new round
-                        }, 2000);
+                            this.startLoadingSequence(800);
+                        }, 500);
                     } else {
                         this.gameMessage = `<span class="text-terminal-green">Correct! Continue sequence... (${this.currentIndex}/${this.currentStratagem.sequence.length})</span>`;
                     }
                 } else {
                     // Wrong key - trigger error state
-                    console.log('Error triggered! Setting errorState to true');
+                    console.log("Error triggered! Setting errorState to true");
                     this.gameActive = false;
                     this.errorState = true;
                     this.gameMessage = `<span class="text-terminal-red">❌ INCORRECT SEQUENCE! Expected ${this.getKeySymbol(expectedKey)}, got ${this.getKeySymbol(key)}. Restarting...</span>`;
                     this.gameStatus = "FAILED";
 
-                    // Clear error state after animation
+                    // Clear error state and start loading sequence
                     setTimeout(() => {
-                        console.log('Clearing error state');
+                        console.log("Clearing error state");
                         this.errorState = false;
+                        this.startLoadingSequence(800);
                     }, 500);
-
-                    setTimeout(() => {
-                        this.initGame(); // Restart
-                    }, 2000);
                 }
             },
 
             getKeySymbol(key) {
                 return getKeySymbol(key);
+            },
+
+            startLoadingSequence(duration = 800) {
+                console.log("Starting loading sequence, duration:", duration);
+                this.isLoading = true;
+                this.loadingProgress = 0;
+
+                // Use interval instead of requestAnimationFrame for better Alpine.js reactivity
+                const startTime = Date.now();
+                const interval = setInterval(() => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    this.loadingProgress = progress * 100;
+
+                    if (progress >= 1) {
+                        console.log("Loading complete");
+                        clearInterval(interval);
+                        this.isLoading = false;
+                        this.loadingProgress = 0;
+                        this.initGame(); // Start new round
+
+                        // Emphasize new icon after brief delay
+                        setTimeout(() => {
+                            console.log("Triggering icon emphasis");
+                            this.iconEmphasized = true;
+                            setTimeout(() => {
+                                console.log("Clearing icon emphasis");
+                                this.iconEmphasized = false;
+                            }, 1000); // Match animation duration
+                        }, 200);
+                    }
+                }, 16); // ~60fps
             },
         }));
     });
@@ -356,12 +421,6 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
 
     .stratagem-icon {
         filter: brightness(1.2) contrast(1.1) hue-rotate(8deg);
-        transition: all 0.3s ease;
-    }
-
-    .stratagem-icon:hover {
-        filter: brightness(1.4) contrast(1.2) hue-rotate(8deg);
-        transform: scale(1.05);
     }
 
     /* Arrow filter classes */
