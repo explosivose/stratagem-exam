@@ -1,0 +1,58 @@
+
+# About
+
+I'm creating a satirical exam for Helldivers 2 players.
+
+https://helldiverstrainingmanual.com/stratagems
+
+## Project Vision
+
+A satirical examination platform that tests Helldivers 2 players on their stratagem knowledge and tactical prowess. The interface should evoke the in-game computer terminals with a militaristic, sci-fi aesthetic reminiscent of the Super Earth democracy.
+
+## Tools & Stack
+
+- **Framework**: Astro.build for static site generation
+- **Styling**: Tailwind CSS 4 for responsive, utility-first styling  
+- **Code Formatting**: Prettier for consistent code style
+- **Deployment**: TBD (Vercel/Netlify recommended for Astro)
+
+## Design Requirements
+
+- **Theme**: Helldivers computer interface aesthetic
+- **Colors**: Military terminal colors (amber/green on dark backgrounds)
+- **Typography**: Monospace fonts for that terminal feel
+- **UI Elements**: 
+  - Retro computer terminal styling
+  - Stratagem input sequences
+  - Score tracking and leaderboards
+  - Timer functionality for timed exams
+
+## Features
+
+- **Stratagem Recognition**: Visual and input-based stratagem identification
+- **Difficulty Levels**: Cadet, Veteran, Helldiver difficulty tiers
+- **Question Types**:
+  - Multiple choice stratagem identification
+  - Input sequence challenges
+  - Tactical scenario questions
+  - Equipment loadout optimization
+- **Satirical Elements**: Humorous Super Earth propaganda integration
+
+## Development Commands
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run linting
+- `npm run format` - Format code with Prettier
+
+## Content Sources
+
+- Official Helldivers 2 stratagem database
+- Community tactical guides
+- In-game lore and terminology
+
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
