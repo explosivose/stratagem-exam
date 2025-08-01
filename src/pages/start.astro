@@ -10,7 +10,8 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
     <div class="max-w-4xl mx-auto" x-data="stratagemGame()">
         <!-- Game Status Bar -->
         <div
-            class="mb-8 bg-terminal-gray/30 border border-terminal-border rounded-lg p-4 backdrop-blur-sm"
+            class="mb-8 bg-terminal-gray/30 border border-terminal-border rounded-lg p-4 backdrop-blur-sm transition-all duration-300"
+            :style="errorState ? 'border-color: #ff4444 !important; background-color: rgba(255, 68, 68, 0.2) !important; box-shadow: 0 0 30px rgba(255, 68, 68, 0.8), inset 0 0 30px rgba(255, 68, 68, 0.2);' : ''"
         >
             <div
                 class="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0"
@@ -19,8 +20,10 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                     <span class="text-terminal-amber font-semibold"
                         >STATUS:</span
                     >
-                    <span x-text="gameStatus" class="text-terminal-green"
-                        >READY</span
+                    <span
+                        x-text="gameStatus"
+                        class="text-terminal-green transition-colors duration-300"
+                        :style="errorState ? 'color: #ff4444 !important; text-shadow: 0 0 15px rgba(255, 68, 68, 1), 0 0 30px rgba(255, 68, 68, 0.6);' : ''">READY</span
                     >
                 </div>
                 <div class="flex items-center space-x-4">
@@ -29,7 +32,8 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                     >
                     <span
                         x-text="currentIndex + '/' + (currentStratagem?.sequence?.length || 0)"
-                        class="text-terminal-green">0/0</span
+                        class="text-terminal-green">0/0</span>
+                    <span x-show="errorState" class="text-terminal-red ml-2">[ERROR]</span
                     >
                 </div>
             </div>
@@ -37,7 +41,8 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
 
         <!-- Main Game Area -->
         <div
-            class="bg-terminal-gray/30 border border-terminal-border rounded-lg p-8 backdrop-blur-sm"
+            class="bg-terminal-gray/30 border border-terminal-border rounded-lg p-8 backdrop-blur-sm transition-all duration-300"
+            :style="errorState ? 'border-color: #ff4444 !important; background-color: rgba(255, 68, 68, 0.2) !important; box-shadow: 0 0 40px rgba(255, 68, 68, 1), inset 0 0 40px rgba(255, 68, 68, 0.3); animation: shake 0.5s ease-in-out;' : ''"
         >
             <!-- Stratagem Display -->
             <div class="text-center mb-8">
@@ -189,7 +194,8 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
 
             <!-- Game Messages -->
             <div
-                class="text-center p-4 bg-terminal-dark/50 border border-terminal-border rounded min-h-[60px] flex items-center justify-center"
+                class="text-center p-4 bg-terminal-dark/50 border border-terminal-border rounded min-h-[60px] flex items-center justify-center transition-all duration-300"
+                :style="errorState ? 'border-color: #ff4444 !important; background-color: rgba(255, 68, 68, 0.3) !important; box-shadow: 0 0 50px rgba(255, 68, 68, 1), inset 0 0 50px rgba(255, 68, 68, 0.4);' : ''"
             >
                 <span x-html="gameMessage" class="text-terminal-green"></span>
             </div>
@@ -223,6 +229,7 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
             gameStatus: "READY",
             gameMessage: "Press any arrow key to begin training...",
             pressedKey: null,
+            errorState: false,
 
             init() {
                 this.initGame();
@@ -272,6 +279,7 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                 this.gameActive = true;
                 this.gameStatus = "ACTIVE";
                 this.gameMessage = "Enter the sequence using arrow keys";
+                this.errorState = false;
             },
 
             handleKeyPress(key) {
@@ -306,10 +314,19 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
                         this.gameMessage = `<span class="text-terminal-green">Correct! Continue sequence... (${this.currentIndex}/${this.currentStratagem.sequence.length})</span>`;
                     }
                 } else {
-                    // Wrong key
+                    // Wrong key - trigger error state
+                    console.log('Error triggered! Setting errorState to true');
                     this.gameActive = false;
-                    this.gameMessage = `<span class="text-red-400">❌ INCORRECT SEQUENCE! Expected ${this.getKeySymbol(expectedKey)}, got ${this.getKeySymbol(key)}. Restarting...</span>`;
+                    this.errorState = true;
+                    this.gameMessage = `<span class="text-terminal-red">❌ INCORRECT SEQUENCE! Expected ${this.getKeySymbol(expectedKey)}, got ${this.getKeySymbol(key)}. Restarting...</span>`;
                     this.gameStatus = "FAILED";
+
+                    // Clear error state after animation
+                    setTimeout(() => {
+                        console.log('Clearing error state');
+                        this.errorState = false;
+                    }, 500);
+
                     setTimeout(() => {
                         this.initGame(); // Restart
                     }, 2000);
@@ -318,16 +335,6 @@ import ArrowRight from "../assets/dpad/arrow-right.svg";
 
             getKeySymbol(key) {
                 return getKeySymbol(key);
-            },
-
-            getArrowSrc(key) {
-                const arrowMap = {
-                    up: `${ArrowUp.src}`,
-                    down: `${ArrowDown.src}`,
-                    left: `${ArrowLeft.src}`,
-                    right: `${ArrowRight.src}`,
-                };
-                return arrowMap[key] || "";
             },
         }));
     });
