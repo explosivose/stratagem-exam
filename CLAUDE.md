@@ -11,8 +11,8 @@ A satirical examination platform that tests Helldivers 2 players on their strata
 
 ## Tools & Stack
 
-- **Framework**: Astro.build for static site generation
-- **Styling**: Tailwind CSS 4 for responsive, utility-first styling  
+- **Framework**: Astro.build for static site generation and Alpine.js for interactivity
+- **Styling**: Tailwind CSS 4 for responsive, utility-first styling
 - **Code Formatting**: Prettier for consistent code style
 - **Deployment**: TBD (Vercel/Netlify recommended for Astro)
 
@@ -21,7 +21,7 @@ A satirical examination platform that tests Helldivers 2 players on their strata
 - **Theme**: Helldivers computer interface aesthetic
 - **Colors**: Military terminal colors (amber/green on dark backgrounds)
 - **Typography**: Monospace fonts for that terminal feel
-- **UI Elements**: 
+- **UI Elements**:
   - Retro computer terminal styling
   - Stratagem input sequences
   - Score tracking and leaderboards
@@ -55,4 +55,6 @@ A satirical examination platform that tests Helldivers 2 players on their strata
 Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.
 ALWAYS prefer editing an existing file to creating a new one.
+ALWAYS prefer Alpine.js for interactivity.
+ALWAYS prefer Tailwind CSS for styling.
 NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.

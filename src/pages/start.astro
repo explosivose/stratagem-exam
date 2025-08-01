@@ -1,0 +1,275 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Training Protocol - Active">
+    <div class="max-w-4xl mx-auto" x-data="stratagemGame()">
+        <!-- Game Status Bar -->
+        <div
+            class="mb-8 bg-terminal-gray/30 border border-terminal-border rounded-lg p-4 backdrop-blur-sm"
+        >
+            <div
+                class="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0"
+            >
+                <div class="flex items-center space-x-4">
+                    <span class="text-terminal-amber font-semibold"
+                        >STATUS:</span
+                    >
+                    <span x-text="gameStatus" class="text-terminal-green"
+                        >READY</span
+                    >
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-terminal-amber font-semibold"
+                        >SEQUENCE:</span
+                    >
+                    <span
+                        x-text="`${currentIndex}/${currentStratagem?.sequence?.length || 0}`"
+                        class="text-terminal-green">0/0</span
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div
+            class="bg-terminal-gray/30 border border-terminal-border rounded-lg p-8 backdrop-blur-sm"
+        >
+            <!-- Stratagem Display -->
+            <div class="text-center mb-8">
+                <div class="mb-4">
+                    <div
+                        x-text="currentStratagem?.icon || '🎯'"
+                        class="text-6xl mb-2"
+                    >
+                    </div>
+                    <div
+                        x-text="currentStratagem?.name || 'Loading...'"
+                        class="text-2xl md:text-3xl text-terminal-amber font-bold mb-2"
+                    >
+                    </div>
+                    <div class="text-sm text-terminal-green/70">
+                        Enter the sequence using arrow keys
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sequence Display -->
+            <div class="mb-8">
+                <div class="text-center mb-4">
+                    <span class="text-terminal-amber font-semibold"
+                        >SEQUENCE:</span
+                    >
+                </div>
+                <div class="flex justify-center flex-wrap gap-2">
+                    <template
+                        x-for="(key, index) in (currentStratagem?.sequence || [])"
+                        :key="index"
+                    >
+                        <div
+                            class="w-12 h-12 border-2 rounded flex items-center justify-center font-mono font-bold text-lg transition-all duration-300"
+                            :class="{
+								'border-terminal-green bg-terminal-green/20 text-terminal-green': index < currentIndex,
+								'border-terminal-amber bg-terminal-amber/10 text-terminal-amber animate-pulse': index === currentIndex,
+								'border-terminal-border bg-terminal-dark text-terminal-green/50': index > currentIndex
+							}"
+                            x-text="getKeySymbol(key)"
+                        >
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Virtual Arrow Keys (for visual reference) -->
+            <div class="mb-8">
+                <div class="text-center mb-4">
+                    <span class="text-terminal-amber font-semibold"
+                        >CONTROLS:</span
+                    >
+                </div>
+                <div class="flex justify-center">
+                    <div class="grid grid-cols-3 gap-2 w-48">
+                        <div></div>
+                        <button
+                            @click="handleKeyPress('up')"
+                            class="key-display bg-terminal-dark border-2 border-terminal-border text-terminal-green p-3 rounded text-center font-mono font-bold hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95"
+                            :class="{ 'bg-terminal-green text-terminal-dark scale-110': pressedKey === 'up' }"
+                        >
+                            ↑
+                        </button>
+                        <div></div>
+                        <button
+                            @click="handleKeyPress('left')"
+                            class="key-display bg-terminal-dark border-2 border-terminal-border text-terminal-green p-3 rounded text-center font-mono font-bold hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95"
+                            :class="{ 'bg-terminal-green text-terminal-dark scale-110': pressedKey === 'left' }"
+                        >
+                            ←
+                        </button>
+                        <button
+                            @click="handleKeyPress('down')"
+                            class="key-display bg-terminal-dark border-2 border-terminal-border text-terminal-green p-3 rounded text-center font-mono font-bold hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95"
+                            :class="{ 'bg-terminal-green text-terminal-dark scale-110': pressedKey === 'down' }"
+                        >
+                            ↓
+                        </button>
+                        <button
+                            @click="handleKeyPress('right')"
+                            class="key-display bg-terminal-dark border-2 border-terminal-border text-terminal-green p-3 rounded text-center font-mono font-bold hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95"
+                            :class="{ 'bg-terminal-green text-terminal-dark scale-110': pressedKey === 'right' }"
+                        >
+                            →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Messages -->
+            <div
+                class="text-center p-4 bg-terminal-dark/50 border border-terminal-border rounded min-h-[60px] flex items-center justify-center"
+            >
+                <span x-html="gameMessage" class="text-terminal-green"></span>
+            </div>
+
+            <!-- Restart Button -->
+            <div class="text-center mt-6">
+                <button
+                    @click="initGame()"
+                    class="px-6 py-2 bg-terminal-dark border border-terminal-border text-terminal-green hover:border-terminal-amber hover:text-terminal-amber transition-colors rounded font-mono"
+                >
+                    &gt; RESTART PROTOCOL
+                </button>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    import {
+        stratagems,
+        getRandomStratagem,
+        getKeySymbol,
+    } from "../data/stratagems.ts";
+
+    // Alpine.js component
+    document.addEventListener("alpine:init", () => {
+        Alpine.data("stratagemGame", () => ({
+            currentStratagem: null,
+            currentIndex: 0,
+            gameActive: false,
+            gameStatus: "READY",
+            gameMessage: "Press any arrow key to begin training...",
+            pressedKey: null,
+
+            init() {
+                this.initGame();
+
+                // Keyboard event listener
+                this.$nextTick(() => {
+                    document.addEventListener("keydown", (e) => {
+                        let key = "";
+                        switch (e.code) {
+                            case "ArrowUp":
+                                key = "up";
+                                break;
+                            case "KeyW":
+                                key = "up";
+                                break;
+                            case "ArrowDown":
+                                key = "down";
+                                break;
+                            case "KeyS":
+                                key = "down";
+                                break;
+                            case "ArrowLeft":
+                                key = "left";
+                                break;
+                            case "KeyA":
+                                key = "left";
+                                break;
+                            case "ArrowRight":
+                                key = "right";
+                                break;
+                            case "KeyD":
+                                key = "right";
+                                break;
+                            default:
+                                return;
+                        }
+
+                        e.preventDefault();
+                        this.handleKeyPress(key);
+                    });
+                });
+            },
+
+            initGame() {
+                this.currentStratagem = getRandomStratagem();
+                this.currentIndex = 0;
+                this.gameActive = true;
+                this.gameStatus = "ACTIVE";
+                this.gameMessage = "Enter the sequence using arrow keys";
+            },
+
+            handleKeyPress(key) {
+                if (!this.gameActive || !this.currentStratagem) return;
+
+                const expectedKey =
+                    this.currentStratagem.sequence[this.currentIndex];
+
+                // Visual feedback for pressed key
+                this.pressedKey = key;
+                setTimeout(() => {
+                    this.pressedKey = null;
+                }, 200);
+
+                if (key === expectedKey) {
+                    // Correct key
+                    this.currentIndex++;
+
+                    if (
+                        this.currentIndex >=
+                        this.currentStratagem.sequence.length
+                    ) {
+                        // Sequence completed
+                        this.gameActive = false;
+                        this.gameMessage =
+                            '<span class="text-terminal-green">✅ SEQUENCE COMPLETED! Excellent work, Helldiver!</span>';
+                        this.gameStatus = "COMPLETED";
+                        setTimeout(() => {
+                            this.initGame(); // Start new round
+                        }, 2000);
+                    } else {
+                        this.gameMessage = `<span class="text-terminal-green">Correct! Continue sequence... (${this.currentIndex}/${this.currentStratagem.sequence.length})</span>`;
+                    }
+                } else {
+                    // Wrong key
+                    this.gameActive = false;
+                    this.gameMessage = `<span class="text-red-400">❌ INCORRECT SEQUENCE! Expected ${this.getKeySymbol(expectedKey)}, got ${this.getKeySymbol(key)}. Restarting...</span>`;
+                    this.gameStatus = "FAILED";
+                    setTimeout(() => {
+                        this.initGame(); // Restart
+                    }, 2000);
+                }
+            },
+
+            getKeySymbol(key) {
+                return getKeySymbol(key);
+            },
+        }));
+    });
+</script>
+
+<style>
+    /* Additional game-specific styles */
+    .key-display {
+        transition: all 0.2s ease;
+    }
+
+    .key-display:hover {
+        transform: scale(1.05);
+    }
+
+    .key-display:active {
+        transform: scale(0.95);
+    }
+</style>
