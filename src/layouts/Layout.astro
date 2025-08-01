@@ -109,16 +109,23 @@ const { title } = Astro.props;
     }
 
     body {
+        background-color: #0a0a0a;
         background-image:
             radial-gradient(
                 circle at 25% 25%,
-                rgba(0, 255, 0, 0.1) 0%,
-                transparent 50%
+                rgba(0, 255, 136, 0.08) 0%,
+                transparent 40%
             ),
             radial-gradient(
                 circle at 75% 75%,
-                rgba(255, 191, 0, 0.1) 0%,
-                transparent 50%
+                rgba(255, 221, 68, 0.08) 0%,
+                transparent 40%
+            ),
+            linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.8) 0%,
+                rgba(5, 10, 5, 0.9) 50%,
+                rgba(0, 0, 0, 0.8) 100%
             );
         background-attachment: fixed;
     }
@@ -135,10 +142,16 @@ const { title } = Astro.props;
 
     /* Terminal glow effect */
     .text-terminal-green {
-        text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        color: rgba(0, 255, 136, 1);
+        text-shadow:
+            0 0 8px rgba(0, 255, 136, 0.7),
+            0 0 15px rgba(0, 255, 136, 0.3);
     }
 
     .text-terminal-amber {
-        text-shadow: 0 0 5px rgba(255, 191, 0, 0.5);
+        color: rgba(255, 221, 68, 1);
+        text-shadow:
+            0 0 8px rgba(255, 221, 68, 0.7),
+            0 0 15px rgba(255, 221, 68, 0.3);
     }
 </style>

@@ -4,11 +4,11 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				'terminal-green': '#00ff00',
-				'terminal-amber': '#ffbf00',
+				'terminal-green': '#00ff88',
+				'terminal-amber': '#ffdd44',
 				'terminal-dark': '#0a0a0a',
-				'terminal-gray': '#1a1a1a',
-				'terminal-border': '#333333',
+				'terminal-gray': '#2a2a2a',
+				'terminal-border': '#555555',
 			},
 			fontFamily: {
 				'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'monospace'],
