@@ -2,115 +2,135 @@ export interface Stratagem {
   id: string;
   name: string;
   sequence: ('up' | 'down' | 'left' | 'right')[];
-  icon: string; // emoji or icon character for now
-  category: 'offensive' | 'defensive' | 'supply' | 'reinforcement';
+  iconUrl: string;
+  category: 'support-weapon' | 'orbital' | 'eagle' | 'bridge' | 'engineering' | 'robotics';
 }
 
+// Import asset URLs for Astro
+import machineGunIcon from '../assets/stratagems/machine-gun.svg';
+import antiMaterielRifleIcon from '../assets/stratagems/anti-materiel-rifle.svg';
+import stalwartIcon from '../assets/stratagems/stalwart.svg';
+import expendableAntiTankIcon from '../assets/stratagems/expendable-anti-tank.svg';
+import recoillessRifleIcon from '../assets/stratagems/recoilless-rifle.svg';
+import flamethrowerIcon from '../assets/stratagems/flamethrower.svg';
+import autocannonIcon from '../assets/stratagems/autocannon.svg';
+import heavyMachineGunIcon from '../assets/stratagems/heavy-machine-gun.svg';
+import airburstRocketLauncherIcon from '../assets/stratagems/airburst-rocket-launcher.svg';
+import commandoIcon from '../assets/stratagems/commando.svg';
+import railgunIcon from '../assets/stratagems/railgun.svg';
+import spearIcon from '../assets/stratagems/spear.svg';
+import reinforceIcon from '../assets/stratagems/reinforce.svg';
+import resupplyIcon from '../assets/stratagems/resupply.svg';
+import hellbombIcon from '../assets/stratagems/hellbomb.svg';
+
 export const stratagems: Stratagem[] = [
-  // Offensive Stratagems
+  // Support Weapons (Patriotic Administration Center)
   {
-    id: 'orbital-precision-strike',
-    name: 'Orbital Precision Strike',
-    sequence: ['right', 'right', 'up'],
-    icon: '🎯',
-    category: 'offensive'
+    id: 'mg-43-machine-gun',
+    name: 'MG-43 Machine Gun',
+    sequence: ['down', 'left', 'down', 'up', 'right'],
+    iconUrl: machineGunIcon.src,
+    category: 'support-weapon'
   },
   {
-    id: 'orbital-airburst-strike',
-    name: 'Orbital Airburst Strike',
-    sequence: ['right', 'right', 'right'],
-    icon: '💥',
-    category: 'offensive'
+    id: 'apw-1-anti-materiel-rifle',
+    name: 'APW-1 Anti-Materiel Rifle',
+    sequence: ['down', 'left', 'right', 'up', 'down'],
+    iconUrl: antiMaterielRifleIcon.src,
+    category: 'support-weapon'
   },
   {
-    id: 'orbital-120mm-he-barrage',
-    name: 'Orbital 120MM HE Barrage',
-    sequence: ['right', 'right', 'down', 'left', 'right', 'down'],
-    icon: '🚀',
-    category: 'offensive'
+    id: 'm-105-stalwart',
+    name: 'M-105 Stalwart',
+    sequence: ['down', 'left', 'down', 'up', 'up', 'left'],
+    iconUrl: stalwartIcon.src,
+    category: 'support-weapon'
   },
   {
-    id: 'orbital-380mm-he-barrage',
-    name: 'Orbital 380MM HE Barrage',
-    sequence: ['right', 'down', 'up', 'up', 'left', 'down', 'down'],
-    icon: '💣',
-    category: 'offensive'
+    id: 'eat-17-expendable-anti-tank',
+    name: 'EAT-17 Expendable Anti-Tank',
+    sequence: ['down', 'down', 'left', 'up', 'right'],
+    iconUrl: expendableAntiTankIcon.src,
+    category: 'support-weapon'
   },
   {
-    id: 'eagle-strafing-run',
-    name: 'Eagle Strafing Run',
-    sequence: ['right', 'right', 'right'],
-    icon: '🦅',
-    category: 'offensive'
+    id: 'gr-8-recoilless-rifle',
+    name: 'GR-8 Recoilless Rifle',
+    sequence: ['down', 'left', 'right', 'right', 'left'],
+    iconUrl: recoillessRifleIcon.src,
+    category: 'support-weapon'
   },
   {
-    id: 'eagle-airstrike',
-    name: 'Eagle Airstrike',
-    sequence: ['right', 'right', 'down', 'right'],
-    icon: '✈️',
-    category: 'offensive'
+    id: 'flam-40-flamethrower',
+    name: 'FLAM-40 Flamethrower',
+    sequence: ['down', 'left', 'up', 'down', 'up'],
+    iconUrl: flamethrowerIcon.src,
+    category: 'support-weapon'
+  },
+  {
+    id: 'ac-8-autocannon',
+    name: 'AC-8 Autocannon',
+    sequence: ['down', 'left', 'down', 'up', 'up', 'right'],
+    iconUrl: autocannonIcon.src,
+    category: 'support-weapon'
+  },
+  {
+    id: 'mg-206-heavy-machine-gun',
+    name: 'MG-206 Heavy Machine Gun',
+    sequence: ['down', 'left', 'up', 'down', 'down'],
+    iconUrl: heavyMachineGunIcon.src,
+    category: 'support-weapon'
+  },
+  {
+    id: 'rl-77-airburst-rocket-launcher',
+    name: 'RL-77 Airburst Rocket Launcher',
+    sequence: ['down', 'up', 'up', 'left', 'right'],
+    iconUrl: airburstRocketLauncherIcon.src,
+    category: 'support-weapon'
+  },
+  {
+    id: 'mls-4x-commando',
+    name: 'MLS-4X Commando',
+    sequence: ['down', 'left', 'up', 'down', 'right'],
+    iconUrl: commandoIcon.src,
+    category: 'support-weapon'
+  },
+  {
+    id: 'rs-422-railgun',
+    name: 'RS-422 Railgun',
+    sequence: ['down', 'right', 'down', 'up', 'left', 'right'],
+    iconUrl: railgunIcon.src,
+    category: 'support-weapon'
+  },
+  {
+    id: 'faf-14-spear',
+    name: 'FAF-14 Spear',
+    sequence: ['down', 'down', 'up', 'down', 'down'],
+    iconUrl: spearIcon.src,
+    category: 'support-weapon'
   },
   
-  // Defensive Stratagems
+  // Essential Mission Stratagems
   {
-    id: 'shield-generator-relay',
-    name: 'Shield Generator Relay',
-    sequence: ['down', 'down', 'left', 'right', 'left', 'right'],
-    icon: '🛡️',
-    category: 'defensive'
+    id: 'reinforce',
+    name: 'Reinforce',
+    sequence: ['up', 'right', 'down', 'right', 'up'],
+    iconUrl: reinforceIcon.src,
+    category: 'bridge'
   },
-  {
-    id: 'tesla-tower',
-    name: 'Tesla Tower',
-    sequence: ['right', 'up', 'right', 'up', 'left', 'right'],
-    icon: '⚡',
-    category: 'defensive'
-  },
-  {
-    id: 'anti-personnel-minefield',
-    name: 'Anti-Personnel Minefield',
-    sequence: ['down', 'left', 'up', 'right'],
-    icon: '💎',
-    category: 'defensive'
-  },
-  
-  // Supply Stratagems
   {
     id: 'resupply',
     name: 'Resupply',
     sequence: ['down', 'down', 'up', 'right'],
-    icon: '📦',
-    category: 'supply'
+    iconUrl: resupplyIcon.src,
+    category: 'bridge'
   },
   {
     id: 'hellbomb',
     name: 'Hellbomb',
     sequence: ['down', 'up', 'left', 'down', 'up', 'right', 'down', 'up'],
-    icon: '🧨',
-    category: 'supply'
-  },
-  {
-    id: 'smoke-barrage',
-    name: 'Smoke Barrage',
-    sequence: ['right', 'right', 'down', 'left'],
-    icon: '💨',
-    category: 'supply'
-  },
-  
-  // Reinforcement
-  {
-    id: 'reinforce',
-    name: 'Reinforce',
-    sequence: ['up', 'right', 'down', 'right', 'up'],
-    icon: '👥',
-    category: 'reinforcement'
-  },
-  {
-    id: 'seaf-artillery',
-    name: 'SEAF Artillery',
-    sequence: ['right', 'up', 'up', 'down'],
-    icon: '🔫',
-    category: 'reinforcement'
+    iconUrl: hellbombIcon.src,
+    category: 'bridge'
   }
 ];
 

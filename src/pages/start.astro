@@ -1,5 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ArrowUp from "../assets/dpad/arrow-up.svg";
+import ArrowDown from "../assets/dpad/arrow-down.svg";
+import ArrowLeft from "../assets/dpad/arrow-left.svg";
+import ArrowRight from "../assets/dpad/arrow-right.svg";
 ---
 
 <Layout title="Training Protocol - Active">
@@ -24,7 +28,7 @@ import Layout from "../layouts/Layout.astro";
                         >SEQUENCE:</span
                     >
                     <span
-                        x-text="`${currentIndex}/${currentStratagem?.sequence?.length || 0}`"
+                        x-text="currentIndex + '/' + (currentStratagem?.sequence?.length || 0)"
                         class="text-terminal-green">0/0</span
                     >
                 </div>
@@ -38,10 +42,19 @@ import Layout from "../layouts/Layout.astro";
             <!-- Stratagem Display -->
             <div class="text-center mb-8">
                 <div class="mb-4">
-                    <div
-                        x-text="currentStratagem?.icon || '🎯'"
-                        class="text-6xl mb-2"
-                    >
+                    <div class="mb-2 flex justify-center">
+                        <img
+                            :src="currentStratagem?.iconUrl || ''"
+                            :alt="currentStratagem?.name || 'Loading...'"
+                            class="w-20 h-20 object-contain bg-terminal-dark/50 border border-terminal-border rounded p-3 stratagem-icon"
+                            x-show="currentStratagem?.iconUrl"
+                        />
+                        <div
+                            x-show="!currentStratagem?.iconUrl"
+                            class="w-16 h-16 flex items-center justify-center text-4xl bg-terminal-dark border border-terminal-border rounded"
+                        >
+                            🎯
+                        </div>
                     </div>
                     <div
                         x-text="currentStratagem?.name || 'Loading...'"
@@ -67,14 +80,53 @@ import Layout from "../layouts/Layout.astro";
                         :key="index"
                     >
                         <div
-                            class="w-12 h-12 border-2 rounded flex items-center justify-center font-mono font-bold text-lg transition-all duration-300"
-                            :class="{
-								'border-terminal-green bg-terminal-green/20 text-terminal-green': index < currentIndex,
-								'border-terminal-amber bg-terminal-amber/10 text-terminal-amber animate-pulse': index === currentIndex,
-								'border-terminal-border bg-terminal-dark text-terminal-green/50': index > currentIndex
-							}"
-                            x-text="getKeySymbol(key)"
+                            class="w-12 h-12 border-2 rounded flex items-center justify-center transition-all duration-300 p-2"
+                            :class={`{
+								'border-terminal-green bg-terminal-green/20': index < currentIndex,
+								'border-terminal-amber bg-terminal-amber/10 animate-pulse': index === currentIndex,
+								'border-terminal-border bg-terminal-dark': index > currentIndex
+							}`}
                         >
+                            <template x-if="key === 'up'">
+                                <ArrowUp
+                                    class="w-full h-full object-contain sequence-arrow"
+                                    :class={`{
+                                        'filter-green': index < currentIndex,
+                                        'filter-amber': index === currentIndex,
+                                        'filter-gray': index > currentIndex
+                                    }`}
+                                />
+                            </template>
+                            <template x-if="key === 'down'">
+                                <ArrowDown
+                                    class="w-full h-full object-contain sequence-arrow"
+                                    :class={`{
+                                        'filter-green': index < currentIndex,
+                                        'filter-amber': index === currentIndex,
+                                        'filter-gray': index > currentIndex
+                                    }`}
+                                />
+                            </template>
+                            <template x-if="key === 'left'">
+                                <ArrowLeft
+                                    class="w-full h-full object-contain sequence-arrow"
+                                    :class={`{
+                                        'filter-green': index < currentIndex,
+                                        'filter-amber': index === currentIndex,
+                                        'filter-gray': index > currentIndex
+                                    }`}
+                                />
+                            </template>
+                            <template x-if="key === 'right'">
+                                <ArrowRight
+                                    class="w-full h-full object-contain sequence-arrow"
+                                    :class={`{
+                                        'filter-green': index < currentIndex,
+                                        'filter-amber': index === currentIndex,
+                                        'filter-gray': index > currentIndex
+                                    }`}
+                                />
+                            </template>
                         </div>
                     </template>
                 </div>
@@ -92,32 +144,44 @@ import Layout from "../layouts/Layout.astro";
                         <div></div>
                         <button
                             @click="handleKeyPress('up')"
-                            class="key-display bg-terminal-dark border-2 border-terminal-border text-terminal-green p-3 rounded text-center font-mono font-bold hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95"
-                            :class="{ 'bg-terminal-green text-terminal-dark scale-110': pressedKey === 'up' }"
+                            class="key-display bg-terminal-dark border-2 border-terminal-border p-3 rounded hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
+                            :class="{ 'bg-terminal-green scale-110': pressedKey === 'up' }"
                         >
-                            ↑
+                            <ArrowUp
+                                class="w-6 h-6 object-contain control-arrow"
+                                :class="{ 'filter-dark': pressedKey === 'up', 'filter-green': pressedKey !== 'up' }"
+                            />
                         </button>
                         <div></div>
                         <button
                             @click="handleKeyPress('left')"
-                            class="key-display bg-terminal-dark border-2 border-terminal-border text-terminal-green p-3 rounded text-center font-mono font-bold hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95"
-                            :class="{ 'bg-terminal-green text-terminal-dark scale-110': pressedKey === 'left' }"
+                            class="key-display bg-terminal-dark border-2 border-terminal-border p-3 rounded hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
+                            :class="{ 'bg-terminal-green scale-110': pressedKey === 'left' }"
                         >
-                            ←
+                            <ArrowLeft
+                                class="w-6 h-6 object-contain control-arrow"
+                                :class="{ 'filter-dark': pressedKey === 'left', 'filter-green': pressedKey !== 'left' }"
+                            />
                         </button>
                         <button
                             @click="handleKeyPress('down')"
-                            class="key-display bg-terminal-dark border-2 border-terminal-border text-terminal-green p-3 rounded text-center font-mono font-bold hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95"
-                            :class="{ 'bg-terminal-green text-terminal-dark scale-110': pressedKey === 'down' }"
+                            class="key-display bg-terminal-dark border-2 border-terminal-border p-3 rounded hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
+                            :class="{ 'bg-terminal-green scale-110': pressedKey === 'down' }"
                         >
-                            ↓
+                            <ArrowDown
+                                class="w-6 h-6 object-contain control-arrow"
+                                :class="{ 'filter-dark': pressedKey === 'down', 'filter-green': pressedKey !== 'down' }"
+                            />
                         </button>
                         <button
                             @click="handleKeyPress('right')"
-                            class="key-display bg-terminal-dark border-2 border-terminal-border text-terminal-green p-3 rounded text-center font-mono font-bold hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95"
-                            :class="{ 'bg-terminal-green text-terminal-dark scale-110': pressedKey === 'right' }"
+                            class="key-display bg-terminal-dark border-2 border-terminal-border p-3 rounded hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
+                            :class="{ 'bg-terminal-green scale-110': pressedKey === 'right' }"
                         >
-                            →
+                            <ArrowRight
+                                class="w-6 h-6 object-contain control-arrow"
+                                :class="{ 'filter-dark': pressedKey === 'right', 'filter-green': pressedKey !== 'right' }"
+                            />
                         </button>
                     </div>
                 </div>
@@ -255,6 +319,16 @@ import Layout from "../layouts/Layout.astro";
             getKeySymbol(key) {
                 return getKeySymbol(key);
             },
+
+            getArrowSrc(key) {
+                const arrowMap = {
+                    up: `${ArrowUp.src}`,
+                    down: `${ArrowDown.src}`,
+                    left: `${ArrowLeft.src}`,
+                    right: `${ArrowRight.src}`,
+                };
+                return arrowMap[key] || "";
+            },
         }));
     });
 </script>
@@ -271,5 +345,41 @@ import Layout from "../layouts/Layout.astro";
 
     .key-display:active {
         transform: scale(0.95);
+    }
+
+    .stratagem-icon {
+        filter: brightness(1.2) contrast(1.1) hue-rotate(8deg);
+        transition: all 0.3s ease;
+    }
+
+    .stratagem-icon:hover {
+        filter: brightness(1.4) contrast(1.2) hue-rotate(8deg);
+        transform: scale(1.05);
+    }
+
+    /* Arrow filter classes */
+    .filter-green {
+        filter: brightness(0) saturate(100%) invert(66%) sepia(73%)
+            saturate(578%) hue-rotate(8deg) brightness(101%) contrast(101%);
+    }
+
+    .filter-amber {
+        filter: brightness(0) saturate(100%) invert(87%) sepia(69%)
+            saturate(2834%) hue-rotate(3deg) brightness(101%) contrast(101%);
+    }
+
+    .filter-gray {
+        filter: brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%)
+            hue-rotate(0deg) brightness(50%) contrast(100%);
+    }
+
+    .filter-dark {
+        filter: brightness(0) saturate(100%) invert(8%) sepia(7%)
+            saturate(1077%) hue-rotate(169deg) brightness(96%) contrast(91%);
+    }
+
+    .sequence-arrow,
+    .control-arrow {
+        transition: filter 0.2s ease;
     }
 </style>
