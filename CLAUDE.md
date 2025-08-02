@@ -13,6 +13,9 @@ A satirical examination platform that tests Helldivers 2 players on their strata
 
 - **Framework**: Astro.build for static site generation and Alpine.js for interactivity
 - **Styling**: Tailwind CSS 4 for responsive, utility-first styling
+  - Note that Astro CSS styles are locally scoped and do not affect other pages.
+  - Global styles are defined in the `global.css` file.
+  - If needed, there is also a `:global` selector for sharing styles with child components.
 - **Code Formatting**: Prettier for consistent code style
 - **Deployment**: TBD (Vercel/Netlify recommended for Astro)
 
@@ -31,19 +34,14 @@ A satirical examination platform that tests Helldivers 2 players on their strata
 
 - **Stratagem Recognition**: Visual and input-based stratagem identification
 - **Difficulty Levels**: Cadet, Veteran, Helldiver difficulty tiers
-- **Question Types**:
-  - Multiple choice stratagem identification
-  - Input sequence challenges
-  - Tactical scenario questions
-  - Equipment loadout optimization
 - **Satirical Elements**: Humorous Super Earth propaganda integration
 
 ## Development Commands
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run linting
-- `npm run format` - Format code with Prettier
+- `pnpm run dev` - Start development server
+- `pnpm run build` - Build for production
+- `pnpm run lint` - Run linting
+- `pnpm run format` - Format code with Prettier
 
 ## Content Sources
 
@@ -52,6 +50,7 @@ A satirical examination platform that tests Helldivers 2 players on their strata
 - In-game lore and terminology
 
 # important-instruction-reminders
+
 Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.
 ALWAYS prefer editing an existing file to creating a new one.
