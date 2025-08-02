@@ -1,0 +1,28 @@
+---
+// Game Status Bar Component
+---
+
+<div
+    class="mb-8 bg-terminal-gray/30 border border-terminal-border rounded-lg p-4 backdrop-blur-sm transition-all duration-300"
+    :style="errorState ? 'border-color: #ff4444 !important; background-color: rgba(255, 68, 68, 0.2) !important; box-shadow: 0 0 30px rgba(255, 68, 68, 0.8), inset 0 0 30px rgba(255, 68, 68, 0.2);' : ''"
+>
+    <div class="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+        <div class="flex items-center space-x-4">
+            <span class="text-terminal-amber font-semibold">STATUS:</span>
+            <span
+                x-text="gameStatus"
+                class="text-terminal-green transition-colors duration-300"
+                :style="errorState ? 'color: #ff4444 !important; text-shadow: 0 0 15px rgba(255, 68, 68, 1), 0 0 30px rgba(255, 68, 68, 0.6);' : ''"
+            >READY</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="text-terminal-amber font-semibold">SEQUENCE:</span>
+            <span
+                x-text="currentIndex + '/' + (currentStratagem?.sequence?.length || 0)"
+                class="text-terminal-green"
+            >0/0</span>
+            <span x-show="errorState" class="text-terminal-red ml-2">[ERROR]</span>
+            <span x-show="iconEmphasized" class="text-terminal-amber ml-2">[EMPHASIS]</span>
+        </div>
+    </div>
+</div>

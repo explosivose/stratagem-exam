@@ -1,0 +1,72 @@
+---
+import ArrowUp from "../assets/dpad/arrow-up.svg";
+import ArrowDown from "../assets/dpad/arrow-down.svg";
+import ArrowLeft from "../assets/dpad/arrow-left.svg";
+import ArrowRight from "../assets/dpad/arrow-right.svg";
+---
+
+<div class="mb-8" x-show="!isLoading">
+    <div class="text-center mb-4">
+        <span class="text-terminal-amber font-semibold">CONTROLS:</span>
+    </div>
+    <div class="flex justify-center">
+        <div class="grid grid-cols-3 gap-2 w-48">
+            <div></div>
+            <button
+                @click="handleKeyPress('up')"
+                class="key-display bg-terminal-dark border-2 border-terminal-border p-3 rounded hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
+                :class="pressedKey === 'up' ? 'bg-terminal-green scale-110' : ''"
+            >
+                <ArrowUp
+                    class="w-6 h-6 object-contain control-arrow"
+                    :class="pressedKey === 'up' ? 'filter-dark' : 'filter-green'"
+                />
+            </button>
+            <div></div>
+            <button
+                @click="handleKeyPress('left')"
+                class="key-display bg-terminal-dark border-2 border-terminal-border p-3 rounded hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
+                :class="pressedKey === 'left' ? 'bg-terminal-green scale-110' : ''"
+            >
+                <ArrowLeft
+                    class="w-6 h-6 object-contain control-arrow"
+                    :class="pressedKey === 'left' ? 'filter-dark' : 'filter-green'"
+                />
+            </button>
+            <button
+                @click="handleKeyPress('down')"
+                class="key-display bg-terminal-dark border-2 border-terminal-border p-3 rounded hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
+                :class="pressedKey === 'down' ? 'bg-terminal-green scale-110' : ''"
+            >
+                <ArrowDown
+                    class="w-6 h-6 object-contain control-arrow"
+                    :class="pressedKey === 'down' ? 'filter-dark' : 'filter-green'"
+                />
+            </button>
+            <button
+                @click="handleKeyPress('right')"
+                class="key-display bg-terminal-dark border-2 border-terminal-border p-3 rounded hover:border-terminal-green transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
+                :class="pressedKey === 'right' ? 'bg-terminal-green scale-110' : ''"
+            >
+                <ArrowRight
+                    class="w-6 h-6 object-contain control-arrow"
+                    :class="pressedKey === 'right' ? 'filter-dark' : 'filter-green'"
+                />
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .key-display {
+        transition: all 0.2s ease;
+    }
+
+    .key-display:hover {
+        transform: scale(1.05);
+    }
+
+    .key-display:active {
+        transform: scale(0.95);
+    }
+</style>

@@ -1,0 +1,45 @@
+---
+import ArrowUp from "../assets/dpad/arrow-up.svg";
+import ArrowDown from "../assets/dpad/arrow-down.svg";
+import ArrowLeft from "../assets/dpad/arrow-left.svg";
+import ArrowRight from "../assets/dpad/arrow-right.svg";
+---
+
+<div class="mb-8">
+    <div class="text-center mb-4">
+        <span class="text-terminal-amber font-semibold">SEQUENCE:</span>
+    </div>
+    <div class="flex justify-center flex-wrap gap-2">
+        <template x-for="(key, index) in (currentStratagem?.sequence || [])" :key="index">
+            <div
+                class="w-12 h-12 border-2 rounded flex items-center justify-center transition-all duration-300 p-2"
+                :class="`${index < currentIndex ? 'border-terminal-green bg-terminal-green/20' : ''} ${index === currentIndex ? 'border-terminal-amber bg-terminal-amber/10 animate-pulse' : ''} ${index > currentIndex ? 'border-terminal-border bg-terminal-dark' : ''}`"
+            >
+                <template x-if="key === 'up'">
+                    <ArrowUp
+                        class="w-full h-full object-contain sequence-arrow"
+                        :class="`${index < currentIndex ? 'filter-green' : ''} ${index === currentIndex ? 'filter-amber' : ''} ${index > currentIndex ? 'filter-gray' : ''}`"
+                    />
+                </template>
+                <template x-if="key === 'down'">
+                    <ArrowDown
+                        class="w-full h-full object-contain sequence-arrow"
+                        :class="`${index < currentIndex ? 'filter-green' : ''} ${index === currentIndex ? 'filter-amber' : ''} ${index > currentIndex ? 'filter-gray' : ''}`"
+                    />
+                </template>
+                <template x-if="key === 'left'">
+                    <ArrowLeft
+                        class="w-full h-full object-contain sequence-arrow"
+                        :class="`${index < currentIndex ? 'filter-green' : ''} ${index === currentIndex ? 'filter-amber' : ''} ${index > currentIndex ? 'filter-gray' : ''}`"
+                    />
+                </template>
+                <template x-if="key === 'right'">
+                    <ArrowRight
+                        class="w-full h-full object-contain sequence-arrow"
+                        :class="`${index < currentIndex ? 'filter-green' : ''} ${index === currentIndex ? 'filter-amber' : ''} ${index > currentIndex ? 'filter-gray' : ''}`"
+                    />
+                </template>
+            </div>
+        </template>
+    </div>
+</div>

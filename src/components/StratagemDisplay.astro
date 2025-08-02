@@ -1,0 +1,30 @@
+---
+// Stratagem Display Component
+---
+
+<div class="text-center mb-8">
+    <div class="mb-4">
+        <div class="mb-2 flex justify-center">
+            <img
+                :src="currentStratagem?.iconUrl || ''"
+                :alt="currentStratagem?.name || 'Loading...'"
+                class="w-20 h-20 object-contain bg-terminal-dark/50 border border-terminal-border rounded p-3 stratagem-icon"
+                :class="iconEmphasized ? 'icon-emphasize' : ''"
+                x-show="currentStratagem?.iconUrl"
+            />
+            <div
+                x-show="!currentStratagem?.iconUrl"
+                class="w-16 h-16 flex items-center justify-center text-4xl bg-terminal-dark border border-terminal-border rounded"
+            >
+                🎯
+            </div>
+        </div>
+        <div
+            x-text="currentStratagem?.name || 'Loading...'"
+            class="text-2xl md:text-3xl text-terminal-amber font-bold mb-2"
+        ></div>
+        <div class="text-sm text-terminal-green/70">
+            Enter the sequence using arrow keys
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+---
+// Loading Bar Component
+---
+
+<div x-show="isLoading" class="mb-8">
+    <div class="text-center mb-4">
+        <span class="text-terminal-amber font-semibold">LOADING...</span>
+        <span class="text-terminal-green ml-2" x-text="`${Math.floor(loadingProgress)}%`"></span>
+    </div>
+    <div class="max-w-md mx-auto">
+        <div class="h-4 bg-terminal-dark border border-terminal-border rounded overflow-hidden">
+            <div
+                class="h-full rounded transition-all duration-75 ease-out loading-bar-fill"
+                :style="`width: ${loadingProgress}%; background-color: #00ff88;`"
+            ></div>
+        </div>
+    </div>
+</div>
