@@ -14,30 +14,35 @@ import ControlPad from "../components/ControlPad.astro";
         <!-- Main Game Area -->
         <div
             class="bg-terminal-gray/30 border border-terminal-border rounded-lg p-8 backdrop-blur-sm transition-all duration-300"
+            :class="{ 'slide-down-exit': slideDownActive }"
             :style="errorState ? 'border-color: #ff4444 !important; background-color: rgba(255, 68, 68, 0.2) !important; box-shadow: 0 0 40px rgba(255, 68, 68, 1), inset 0 0 40px rgba(255, 68, 68, 0.3); animation: shake 0.5s ease-in-out;' : ''"
         >
-            <StratagemDisplay />
-            <SequenceDisplay />
-            <LoadingBar />
-            <ControlPad />
+            <div x-show="!isLoading">
+                <StratagemDisplay />
+                <SequenceDisplay />
+                <ControlPad />
 
-            <!-- Game Messages -->
-            <div
-                class="text-center p-4 bg-terminal-dark/50 border border-terminal-border rounded min-h-[60px] flex items-center justify-center transition-all duration-300"
-                :style="errorState ? 'border-color: #ff4444 !important; background-color: rgba(255, 68, 68, 0.3) !important; box-shadow: 0 0 50px rgba(255, 68, 68, 1), inset 0 0 50px rgba(255, 68, 68, 0.4);' : ''"
-            >
-                <span x-html="gameMessage" class="text-terminal-green"></span>
-            </div>
-
-            <!-- Restart Button -->
-            <div class="text-center mt-6">
-                <button
-                    @click="initGame()"
-                    class="px-6 py-2 bg-terminal-dark border border-terminal-border text-terminal-green hover:border-terminal-amber hover:text-terminal-amber transition-colors rounded font-mono"
+                <!-- Game Messages -->
+                <div
+                    class="text-center p-4 bg-terminal-dark/50 border border-terminal-border rounded min-h-[60px] flex items-center justify-center transition-all duration-300"
+                    :style="errorState ? 'border-color: #ff4444 !important; background-color: rgba(255, 68, 68, 0.3) !important; box-shadow: 0 0 50px rgba(255, 68, 68, 1), inset 0 0 50px rgba(255, 68, 68, 0.4);' : ''"
                 >
-                    &gt; RESTART PROTOCOL
-                </button>
+                    <span x-html="gameMessage" class="text-terminal-green"
+                    ></span>
+                </div>
+
+                <!-- Restart Button -->
+                <div class="text-center mt-6">
+                    <button
+                        @click="initGame()"
+                        class="px-6 py-2 bg-terminal-dark border border-terminal-border text-terminal-green hover:border-terminal-amber hover:text-terminal-amber transition-colors rounded font-mono"
+                    >
+                        &gt; RESTART PROTOCOL
+                    </button>
+                </div>
             </div>
+
+            <LoadingBar />
         </div>
     </div>
 </Layout>
@@ -73,5 +78,25 @@ import ControlPad from "../components/ControlPad.astro";
     .sequence-arrow,
     .control-arrow {
         transition: filter 0.2s ease;
+    }
+
+    /* Slide down animation */
+    .slide-down-exit {
+        animation: slideDownExit 1.0s ease-in-out forwards;
+    }
+
+    @keyframes slideDownExit {
+        0% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        20% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(150vh);
+            opacity: 0.1;
+        }
     }
 </style>
