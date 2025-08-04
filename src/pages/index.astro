@@ -1,124 +1,157 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Training Protocol">
-	<div class="max-w-4xl mx-auto text-center">
-		<!-- Main Terminal Window -->
-		<div class="bg-terminal-gray/30 border border-terminal-border rounded-lg p-8 md:p-12 backdrop-blur-sm relative overflow-hidden">
-			<!-- Terminal header bar -->
-			<div class="absolute top-0 left-0 right-0 h-8 bg-terminal-gray/50 border-b border-terminal-border flex items-center px-4">
-				<div class="flex space-x-2">
-					<div class="w-3 h-3 rounded-full bg-red-500"></div>
-					<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-					<div class="w-3 h-3 rounded-full bg-terminal-green"></div>
-				</div>
-				<div class="flex-1 text-center text-xs text-terminal-green/70">
-					HELLDIVER_TRAINING_PROTOCOL.exe
-				</div>
-			</div>
-			
-			<!-- Content -->
-			<div class="mt-8 space-y-8">
-				<!-- Super Earth Logo/Title -->
-				<div class="space-y-4">
-					<div class="text-4xl md:text-6xl font-bold text-terminal-amber mb-2">
-						SUPER EARTH
-					</div>
-					<div class="text-xl md:text-2xl text-terminal-green">
-						STRATAGEM EXAMINATION PROTOCOL
-					</div>
-					<div class="text-sm text-terminal-green/70">
-						MANDATORY TRAINING ASSESSMENT • CLASSIFICATION: RESTRICTED
-					</div>
-				</div>
-				
-				<!-- Welcome Message -->
-				<div class="bg-terminal-dark/50 border border-terminal-border rounded p-6 text-left space-y-4">
-					<div class="text-terminal-amber font-semibold">
-						&gt; INITIALIZATION COMPLETE
-					</div>
-					<div class="text-terminal-green space-y-2">
-						<p>
-							Welcome, Helldiver candidate. This examination will test your knowledge of 
-							stratagem deployment sequences and tactical applications.
-						</p>
-						<p>
-							Your performance will be recorded and evaluated by Super Earth Command. 
-							Failure to meet minimum standards may result in reassignment to 
-							non-combat roles.
-						</p>
-						<p class="text-terminal-amber">
-							Remember: Democracy never sleeps, and neither should your dedication to liberty.
-						</p>
-					</div>
-					<div class="text-terminal-green/70 text-sm border-t border-terminal-border pt-4">
-						<div class="flex flex-col sm:flex-row sm:justify-between">
-							<span>PROTOCOL VERSION: 2.1.4</span>
-							<span>CLEARANCE LEVEL: HELLDIVER</span>
-						</div>
-					</div>
-				</div>
-				
-				<!-- Start Button -->
-				<div class="pt-4">
-					<a 
-						href="/start"
-						class="group relative inline-block px-8 py-4 bg-terminal-dark border-2 border-terminal-green text-terminal-green font-bold text-lg md:text-xl rounded hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-terminal-amber focus:ring-offset-2 focus:ring-offset-terminal-dark"
-					>
-						<span class="relative z-10">
-							&gt; BEGIN TRAINING PROTOCOL
-						</span>
-						<div class="absolute inset-0 border-2 border-terminal-green opacity-0 group-hover:opacity-100 group-hover:animate-pulse rounded"></div>
-					</a>
-				</div>
-				
-				<!-- Footer Notice -->
-				<div class="text-xs text-terminal-green/50 space-y-1">
-					<p>
-						By proceeding, you acknowledge that this assessment is conducted under 
-						the authority of Super Earth Military Command.
-					</p>
-					<p class="text-terminal-amber">
-						Unauthorized access is punishable by immediate termination.
-					</p>
-				</div>
-			</div>
-		</div>
-		
-		<!-- Additional Terminal Effects -->
-		<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-			<div class="bg-terminal-gray/20 border border-terminal-border rounded p-3">
-				<div class="text-terminal-amber">STATUS</div>
-				<div class="text-terminal-green">READY</div>
-			</div>
-			<div class="bg-terminal-gray/20 border border-terminal-border rounded p-3">
-				<div class="text-terminal-amber">CANDIDATES</div>
-				<div class="text-terminal-green">∞</div>
-			</div>
-			<div class="bg-terminal-gray/20 border border-terminal-border rounded p-3">
-				<div class="text-terminal-amber">SUCCESS RATE</div>
-				<div class="text-terminal-green">CLASSIFIED</div>
-			</div>
-		</div>
-	</div>
+    <div class="max-w-4xl mx-auto text-center">
+        <!-- Main Terminal Window -->
+        <div
+            class="bg-terminal-gray/30 border border-terminal-border rounded-lg p-8 md:p-12 backdrop-blur-sm relative overflow-hidden"
+        >
+            <!-- Terminal header bar -->
+            <div
+                class="absolute top-0 left-0 right-0 h-8 bg-terminal-gray/50 border-b border-terminal-border flex items-center px-4"
+            >
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-terminal-green"></div>
+                </div>
+                <div class="flex-1 text-center text-xs text-terminal-green/70">
+                    HELLDIVER_TRAINING_PROTOCOL.exe
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="mt-8 space-y-8">
+                <!-- Super Earth Logo/Title -->
+                <div class="space-y-4">
+                    <div
+                        class="text-4xl md:text-6xl font-bold text-terminal-amber mb-2"
+                    >
+                        SUPER EARTH
+                    </div>
+                    <div class="text-xl md:text-2xl text-terminal-green">
+                        STRATAGEM EXAMINATION PROTOCOL
+                    </div>
+                    <div class="text-sm text-terminal-green/70">
+                        MANDATORY TRAINING ASSESSMENT • CLASSIFICATION:
+                        RESTRICTED
+                    </div>
+                </div>
+
+                <!-- Welcome Message -->
+                <div
+                    class="bg-terminal-dark/50 border border-terminal-border rounded p-6 text-left space-y-4"
+                >
+                    <div class="text-terminal-amber font-semibold">
+                        &gt; INITIALIZATION COMPLETE
+                    </div>
+                    <div class="text-terminal-green space-y-2">
+                        <p>
+                            Welcome, Helldiver candidate. This examination will
+                            test your knowledge of stratagem deployment
+                            sequences and tactical applications.
+                        </p>
+                        <p>
+                            Your performance will be recorded and evaluated by
+                            Super Earth Command. Failure to meet minimum
+                            standards may result in reassignment to non-combat
+                            roles.
+                        </p>
+                        <p class="text-terminal-amber">
+                            Remember: Democracy never sleeps, and neither should
+                            your dedication to liberty.
+                        </p>
+                    </div>
+                    <div
+                        class="text-terminal-green/70 text-sm border-t border-terminal-border pt-4"
+                    >
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between"
+                        >
+                            <span>PROTOCOL VERSION: 2.1.4</span>
+                            <span>CLEARANCE LEVEL: HELLDIVER</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Start Button -->
+                <div class="pt-4">
+                    <a
+                        href="/exam"
+                        class="group relative inline-block px-8 py-4 bg-terminal-dark border-2 border-terminal-green text-terminal-green font-bold text-lg md:text-xl rounded hover:bg-terminal-green hover:text-terminal-dark transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-terminal-amber focus:ring-offset-2 focus:ring-offset-terminal-dark"
+                    >
+                        <span class="relative z-10">
+                            &gt; BEGIN TRAINING PROTOCOL
+                        </span>
+                        <div
+                            class="absolute inset-0 border-2 border-terminal-green opacity-0 group-hover:opacity-100 group-hover:animate-pulse rounded"
+                        >
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Footer Notice -->
+                <div class="text-xs text-terminal-green/50 space-y-1">
+                    <p>
+                        By proceeding, you acknowledge that this assessment is
+                        conducted under the authority of Super Earth Military
+                        Command.
+                    </p>
+                    <p class="text-terminal-amber">
+                        Unauthorized access is punishable by immediate
+                        termination.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Terminal Effects -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div
+                class="bg-terminal-gray/20 border border-terminal-border rounded p-3"
+            >
+                <div class="text-terminal-amber">STATUS</div>
+                <div class="text-terminal-green">READY</div>
+            </div>
+            <div
+                class="bg-terminal-gray/20 border border-terminal-border rounded p-3"
+            >
+                <div class="text-terminal-amber">CANDIDATES</div>
+                <div class="text-terminal-green">∞</div>
+            </div>
+            <div
+                class="bg-terminal-gray/20 border border-terminal-border rounded p-3"
+            >
+                <div class="text-terminal-amber">SUCCESS RATE</div>
+                <div class="text-terminal-green">CLASSIFIED</div>
+            </div>
+        </div>
+    </div>
 </Layout>
 
 <style>
-	/* Additional terminal effects */
-	button {
-		text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-	}
-	
-	button:hover {
-		box-shadow: 
-			0 0 20px rgba(0, 255, 0, 0.3),
-			inset 0 0 20px rgba(0, 255, 0, 0.1);
-	}
-	
-	/* Blinking cursor effect */
-	@keyframes blink {
-		0%, 50% { opacity: 1; }
-		51%, 100% { opacity: 0; }
-	}
+    /* Additional terminal effects */
+    button {
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+
+    button:hover {
+        box-shadow:
+            0 0 20px rgba(0, 255, 0, 0.3),
+            inset 0 0 20px rgba(0, 255, 0, 0.1);
+    }
+
+    /* Blinking cursor effect */
+    @keyframes blink {
+        0%,
+        50% {
+            opacity: 1;
+        }
+        51%,
+        100% {
+            opacity: 0;
+        }
+    }
 </style>
